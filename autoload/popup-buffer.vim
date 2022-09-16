@@ -18,8 +18,12 @@ func s:Getbf()
 		else
 			let s:info..=' '
 		endif
-		let s:info..=split(s:tmp[2][1:-2],'/')[-1]
-		let s:info..=" |"
+		if s:tmp[2]=="+"
+			let s:info..=split(s:tmp[3][1:-2],'/')[-1].."+"
+		else
+			let s:info..=split(s:tmp[2][1:-2],'/')[-1].." "
+		endif
+		let s:info..="|"
 	endfor
 	return s:info
 endfunc
