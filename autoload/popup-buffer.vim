@@ -8,6 +8,10 @@ func s:Getbf()
 	for i in s:ldl
 		let s:tmp=split(i)
 		let s:flag=0
+		let s:splt='/'
+		if has('win32')
+			let s:splt='\'
+		endif
 		for j in s:tmp[1]
 			if j=='%'
 				let s:flag=1
@@ -19,9 +23,9 @@ func s:Getbf()
 			let s:info..=' '
 		endif
 		if s:tmp[2]=="+"
-			let s:info..=split(s:tmp[3][1:-2],'/')[-1].."+"
+			let s:info..=split(s:tmp[3][1:-2],s:splt)[-1].."+"
 		else
-			let s:info..=split(s:tmp[2][1:-2],'/')[-1].." "
+			let s:info..=split(s:tmp[2][1:-2],s:splt)[-1].." "
 		endif
 		let s:info..="|"
 	endfor
