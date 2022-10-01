@@ -29,5 +29,5 @@ func s:Getbf()
 endfunc
 func Showbf(tm)
 	call popup_clear()
-	call popup_create(s:Getbf(),#{line:33,col:1,time:a:tm,highlight:"ModeMsg"})
+	call popup_create(s:Getbf(),#{line:winheight(0),col:1,time:a:tm,highlight:"ModeMsg"})
 endfunc
