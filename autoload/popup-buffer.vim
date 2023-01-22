@@ -5,31 +5,41 @@ func s:Getbf()
 	let s:ldl=split(dl,'\n')
 	let s:fl=[]
 	let s:info=""
+	let s:before=""
+	let s:after=""
+	let s:flag=0
 	for i in s:ldl
 		let s:tmp=split(i)
-		let s:flag=0
 		let s:splt='/'
+		let s:curfile=0
 		if has('win32')
 			let s:splt='\'
 		endif
 		for j in s:tmp[1]
 			if j=='%'
 				let s:flag=1
+				let s:curfile=1
+				break
 			endif
 		endfor
-		if s:flag==1
-			let s:info..='*'
-		else
-			let s:info..=' '
+		if s:curfile==1
+			continue
 		endif
 		if s:tmp[2]=="+"
-			let s:info..=split(s:tmp[3][1:-2],s:splt)[-1].."+"
+			if s:flag==0
+				let s:before..=" "..split(s:tmp[3][1:-2],s:splt)[-1].."+|"
+			else
+				let s:after..=" "..split(s:tmp[3][1:-2],s:splt)[-1].."+|"
+			endif
 		else
-			let s:info..=split(s:tmp[2][1:-2],s:splt)[-1].." "
+			if s:flag==0
+				let s:before..=" "..split(s:tmp[2][1:-2],s:splt)[-1].." |"
+			else
+				let s:after..=" "..split(s:tmp[2][1:-2],s:splt)[-1].." |"
+			endif
 		endif
-		let s:info..="|"
 	endfor
-	return s:info
+	return s:after..s:before
 endfunc
 func Showbf(tm)
 	call popup_clear()
